@@ -1,0 +1,184 @@
+[
+    {
+        "id": "dbadcacb23636dd7",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "37f9b03439a50de3",
+        "type": "telegram bot",
+        "botname": "VendasNezaoBot",
+        "usernames": "",
+        "chatids": "",
+        "baseapiurl": "",
+        "testenvironment": false,
+        "updatemode": "polling",
+        "pollinterval": 300,
+        "usesocks": false,
+        "sockshost": "",
+        "socksprotocol": "socks5",
+        "socksport": 6667,
+        "socksusername": "anonymous",
+        "sockspassword": "",
+        "bothost": "",
+        "botpath": "",
+        "localbothost": "0.0.0.0",
+        "localbotport": 8443,
+        "publicbotport": 8443,
+        "privatekey": "",
+        "certificate": "",
+        "useselfsignedcertificate": false,
+        "sslterminated": false,
+        "verboselogging": false
+    },
+    {
+        "id": "30222288d28e1845",
+        "type": "telegram receiver",
+        "z": "dbadcacb23636dd7",
+        "name": "MeuTelegram",
+        "bot": "37f9b03439a50de3",
+        "saveDataDir": "",
+        "filterCommands": false,
+        "x": 110,
+        "y": 220,
+        "wires": [
+            [
+                "c83eb4b0b48398db",
+                "dee7014dd9dc7d3b"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "c83eb4b0b48398db",
+        "type": "debug",
+        "z": "dbadcacb23636dd7",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 280,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "20ff5d96f35a04ad",
+        "type": "telegram sender",
+        "z": "dbadcacb23636dd7",
+        "name": "Enviador",
+        "bot": "37f9b03439a50de3",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 720,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b5b4406c2c259602",
+        "type": "function",
+        "z": "dbadcacb23636dd7",
+        "name": "RespostaBot",
+        "func": "msg.payload.content = \"Tudo bem com voce? O que voce quer?\"\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 230,
+        "y": 480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "30a4350c4a1e18a3",
+        "type": "debug",
+        "z": "dbadcacb23636dd7",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 580,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "44a579f4973a6875",
+        "type": "watson-assistant-v2",
+        "z": "dbadcacb23636dd7",
+        "name": "MeuAssistant",
+        "service-endpoint": "https://api.au-syd.assistant.watson.cloud.ibm.com/instances/c6e236e8-cce3-4def-a50a-18af566b3eda",
+        "assistant_id": "2c848f10-57e8-47f4-9f31-24c5a4ce3f71",
+        "debug": false,
+        "restart": false,
+        "return_context": true,
+        "alternate_intents": false,
+        "multisession": true,
+        "timeout": "",
+        "optout-learning": false,
+        "persist-session-id": false,
+        "x": 420,
+        "y": 220,
+        "wires": [
+            [
+                "30a4350c4a1e18a3",
+                "8407cd4825fd8809"
+            ]
+        ]
+    },
+    {
+        "id": "dee7014dd9dc7d3b",
+        "type": "function",
+        "z": "dbadcacb23636dd7",
+        "name": "function 1",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 280,
+        "y": 360,
+        "wires": [
+            [
+                "44a579f4973a6875"
+            ]
+        ]
+    },
+    {
+        "id": "8407cd4825fd8809",
+        "type": "function",
+        "z": "dbadcacb23636dd7",
+        "name": "function 2",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 360,
+        "wires": [
+            [
+                "20ff5d96f35a04ad"
+            ]
+        ]
+    }
+]

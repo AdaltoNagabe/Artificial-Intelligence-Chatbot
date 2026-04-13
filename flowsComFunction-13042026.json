@@ -1,0 +1,43 @@
+[
+    {
+        "id": "20ff5d96f35a04ad",
+        "type": "telegram sender",
+        "z": "dbadcacb23636dd7",
+        "name": "Enviador",
+        "bot": "37f9b03439a50de3",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 740,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "37f9b03439a50de3",
+        "type": "telegram bot",
+        "botname": "VendasNezaoBot",
+        "usernames": "",
+        "chatids": "",
+        "baseapiurl": "",
+        "testenvironment": false,
+        "updatemode": "polling",
+        "pollinterval": 300,
+        "usesocks": false,
+        "sockshost": "",
+        "socksprotocol": "socks5",
+        "socksport": 6667,
+        "socksusername": "anonymous",
+        "sockspassword": "",
+        "bothost": "",
+        "botpath": "",
+        "localbothost": "0.0.0.0",
+        "localbotport": 8443,
+        "publicbotport": 8443,
+        "privatekey": "",
+        "certificate": "",
+        "useselfsignedcertificate": false,
+        "sslterminated": false,
+        "verboselogging": false
+    }
+]

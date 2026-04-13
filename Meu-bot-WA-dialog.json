@@ -1,0 +1,235 @@
+{
+  "intents": [
+    {
+      "intent": "Definicao_Problema",
+      "examples": [
+        {
+          "text": "E como estão as tretas ai na empresa?"
+        },
+        {
+          "text": "Ha quanto tempo estão enfrentando esse problema?"
+        },
+        {
+          "text": "Quais são as partes interessadas em resolver esse problema?"
+        },
+        {
+          "text": "Quais são os setores afetados?"
+        },
+        {
+          "text": "Quais soluções já foram testadas?"
+        },
+        {
+          "text": "Qual é o principal problema?"
+        }
+      ],
+      "description": "Possiveis questionamentos sobre os objetivos e desafios do Challenge."
+    },
+    {
+      "intent": "Primeira_Etapa",
+      "examples": [
+        {
+          "text": "Quais são os dias de trabalho?"
+        },
+        {
+          "text": "Qual é a escala de trabalho?"
+        },
+        {
+          "text": "Qual o período da escala?"
+        },
+        {
+          "text": "qual o problema com a escala?"
+        }
+      ],
+      "description": ""
+    }
+  ],
+  "entities": [
+    {
+      "entity": "dias-da-semana",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "quarta",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "quinta",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "segunda",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "sexta",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "terça",
+          "synonyms": []
+        }
+      ],
+      "fuzzy_match": true
+    }
+  ],
+  "metadata": {
+    "api_version": {
+      "major_version": "v2",
+      "minor_version": "2018-11-08"
+    }
+  },
+  "dialog_nodes": [
+    {
+      "type": "standard",
+      "title": "Bem-vindo",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Olá. Como posso te ajudar?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "welcome",
+      "dialog_node": "Bem-vindo"
+    },
+    {
+      "type": "standard",
+      "title": "Em outros casos",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Eu não entendi. Você pode tentar reformular a frase."
+              },
+              {
+                "text": "Você pode reformular sua afirmação? Eu não estou entendendo."
+              },
+              {
+                "text": "Eu não entendi o sentido."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "anything_else",
+      "dialog_node": "Em outros casos",
+      "previous_sibling": "node_9_1774305215417",
+      "disambiguation_opt_out": true
+    },
+    {
+      "type": "standard",
+      "title": "Dias de Atendimento",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "OK, então terça!"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_9_1774305215417",
+      "conditions": "@dias-da-semana:terça",
+      "dialog_node": "node_3_1774307746807",
+      "previous_sibling": "node_7_1774305831761"
+    },
+    {
+      "type": "standard",
+      "title": "Dias Sem Funcionamento",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Esse dia eu não trabalho!"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_9_1774305215417",
+      "conditions": "@dias-da-semana != \"segunda\"",
+      "dialog_node": "node_6_1774307699735",
+      "previous_sibling": "node_3_1774307746807"
+    },
+    {
+      "type": "standard",
+      "title": "Primeiro criterio",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Não tenho essa informação. Marque um dia para visitar o escalante."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_9_1774305215417",
+      "conditions": "#Primeira_Etapa",
+      "dialog_node": "node_7_1774305831761"
+    },
+    {
+      "type": "standard",
+      "title": "Entendimento do Problema",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Boa Pergunta! Nosso problema está no tratamento das escalas"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#Definicao_Problema",
+      "dialog_node": "node_9_1774305215417",
+      "previous_sibling": "Bem-vindo"
+    }
+  ],
+  "counterexamples": [],
+  "system_settings": {
+    "disambiguation": {
+      "prompt": "Você quis dizer:",
+      "enabled": true,
+      "randomize": true,
+      "max_suggestions": 5,
+      "suggestion_text_policy": "title",
+      "none_of_the_above_prompt": "Nenhuma das anteriores",
+      "use_connect_to_support_prompt": "Connect to support",
+      "single_answer_clarification_prompt": "Something else"
+    },
+    "human_agent_assist": {
+      "prompt": "Você quis dizer:"
+    }
+  },
+  "learning_opt_out": false,
+  "language": "pt-br",
+  "description": "",
+  "name": "Meu bot WA-dialog"
+}

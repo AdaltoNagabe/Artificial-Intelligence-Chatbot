@@ -1,0 +1,266 @@
+[
+    {
+        "id": "dbadcacb23636dd7",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "30222288d28e1845",
+        "type": "telegram receiver",
+        "z": "dbadcacb23636dd7",
+        "name": "MeuTelegram",
+        "bot": "37f9b03439a50de3",
+        "saveDataDir": "",
+        "filterCommands": false,
+        "x": 110,
+        "y": 180,
+        "wires": [
+            [
+                "c83eb4b0b48398db",
+                "83442b7a817ed75c"
+            ],
+            [
+                "317b63410d3861ce"
+            ]
+        ]
+    },
+    {
+        "id": "c83eb4b0b48398db",
+        "type": "debug",
+        "z": "dbadcacb23636dd7",
+        "name": "Entrada no Telegram",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 260,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "20ff5d96f35a04ad",
+        "type": "telegram sender",
+        "z": "dbadcacb23636dd7",
+        "name": "Enviador",
+        "bot": "37f9b03439a50de3",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 740,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "30a4350c4a1e18a3",
+        "type": "debug",
+        "z": "dbadcacb23636dd7",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 540,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "44a579f4973a6875",
+        "type": "watson-assistant-v2",
+        "z": "dbadcacb23636dd7",
+        "name": "Meu Bot CP1",
+        "service-endpoint": "https://api.au-syd.assistant.watson.cloud.ibm.com/instances/c6e236e8-cce3-4def-a50a-18af566b3eda",
+        "assistant_id": "2c848f10-57e8-47f4-9f31-24c5a4ce3f71",
+        "debug": false,
+        "restart": false,
+        "return_context": true,
+        "alternate_intents": false,
+        "multisession": true,
+        "timeout": "",
+        "optout-learning": false,
+        "persist-session-id": false,
+        "x": 410,
+        "y": 180,
+        "wires": [
+            [
+                "30a4350c4a1e18a3",
+                "54aaed48c5bd31bd"
+            ]
+        ]
+    },
+    {
+        "id": "dee7014dd9dc7d3b",
+        "type": "function",
+        "z": "dbadcacb23636dd7",
+        "name": "Normalizar / Contexto",
+        "func": "msg.params = {\n    \"session_id\": msg.payload.session_id !== 'undefined' ? msg.payload.session_id : \"\"\n};\nmsg.chatId = msg.payload.chatId;\nmsg.payload = msg.payload.content;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 220,
+        "y": 440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8407cd4825fd8809",
+        "type": "function",
+        "z": "dbadcacb23636dd7",
+        "name": "Tracar resposta / rotas + teclado",
+        "func": "msg.payload = {\n    chatId: msg.chatId,\n    type: 'message',\n    content: msg.payload.output.generic[0].text\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 590,
+        "y": 440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "83442b7a817ed75c",
+        "type": "change",
+        "z": "dbadcacb23636dd7",
+        "name": "Prepara Entrada",
+        "rules": [
+            {
+                "t": "set",
+                "p": "params.session_id",
+                "pt": "msg",
+                "to": "payload.chatId",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "chatId",
+                "pt": "msg",
+                "to": "payload.chatId",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.content",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 260,
+        "y": 260,
+        "wires": [
+            [
+                "44a579f4973a6875"
+            ]
+        ]
+    },
+    {
+        "id": "54aaed48c5bd31bd",
+        "type": "change",
+        "z": "dbadcacb23636dd7",
+        "name": "Prepara Retorno",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.chatId",
+                "pt": "msg",
+                "to": "chatId",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "payload.type",
+                "pt": "msg",
+                "to": "message",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload.content",
+                "pt": "msg",
+                "to": "payload.output.generic[0].text",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 590,
+        "y": 260,
+        "wires": [
+            [
+                "20ff5d96f35a04ad"
+            ]
+        ]
+    },
+    {
+        "id": "317b63410d3861ce",
+        "type": "function",
+        "z": "dbadcacb23636dd7",
+        "name": "Acesso nao autorizado",
+        "func": "msg.payload.content = \"Voce não e um usuario autorizado\";\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 380,
+        "wires": [
+            [
+                "20ff5d96f35a04ad"
+            ]
+        ]
+    },
+    {
+        "id": "37f9b03439a50de3",
+        "type": "telegram bot",
+        "botname": "VendasNezaoBot",
+        "usernames": "",
+        "chatids": "",
+        "baseapiurl": "",
+        "testenvironment": false,
+        "updatemode": "polling",
+        "pollinterval": 300,
+        "usesocks": false,
+        "sockshost": "",
+        "socksprotocol": "socks5",
+        "socksport": 6667,
+        "socksusername": "anonymous",
+        "sockspassword": "",
+        "bothost": "",
+        "botpath": "",
+        "localbothost": "0.0.0.0",
+        "localbotport": 8443,
+        "publicbotport": 8443,
+        "privatekey": "",
+        "certificate": "",
+        "useselfsignedcertificate": false,
+        "sslterminated": false,
+        "verboselogging": false
+    }
+]

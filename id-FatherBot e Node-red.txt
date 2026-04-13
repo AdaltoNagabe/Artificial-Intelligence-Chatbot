@@ -1,0 +1,12 @@
+8604736517:AAEDvUDGWfP1hOjoD-Sp4XfF7-YZF1TgaNY - VendasNezao
+
+8729844937:AAFVee071WhuXgCQr6FQ_KHYwXfkD-nCoWE
+----------------------------------------------------------------
+
+Se der problema no certificado
+
+c:> set NODE_TLS_REJECT_UNAUTHORIZED=0
+
+https://core.telegram.org/api
+Documentacao
+

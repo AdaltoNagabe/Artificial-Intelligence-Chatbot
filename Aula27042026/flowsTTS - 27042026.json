@@ -1,0 +1,186 @@
+[
+    {
+        "id": "e53f196d320b50d7",
+        "type": "tab",
+        "label": "Flow 3",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "b0e349008e38a47e",
+        "type": "watson-text-to-speech",
+        "z": "e53f196d320b50d7",
+        "name": "TTS",
+        "lang": "pt-BR",
+        "langhidden": "pt-BR",
+        "langcustom": "NoCustomisationSetting",
+        "langcustomhidden": "",
+        "voice": "pt-BR_CamilaNatural",
+        "voicehidden": "",
+        "format": "audio/wav",
+        "password": "",
+        "apikey": "tJ1n2WVUN68Lxhm3qGnC8hRRUP9wuk0Vk6ylVPakCmE5",
+        "payload-response": true,
+        "service-endpoint": "https://api.au-syd.text-to-speech.watson.cloud.ibm.com/instances/dd1d0638-1d3b-4872-8093-3a1f898b567d",
+        "x": 270,
+        "y": 220,
+        "wires": [
+            [
+                "fbdbaa2df227402c",
+                "f06b677e5524b6a9",
+                "490a1bb4b465593e"
+            ]
+        ]
+    },
+    {
+        "id": "f06b677e5524b6a9",
+        "type": "play audio",
+        "z": "e53f196d320b50d7",
+        "name": "",
+        "voice": "11",
+        "x": 490,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "fbdbaa2df227402c",
+        "type": "debug",
+        "z": "e53f196d320b50d7",
+        "name": "Saida",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 410,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "9d06db9cc535f7de",
+        "type": "inject",
+        "z": "e53f196d320b50d7",
+        "name": "Entrada",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "fala logo caraio",
+        "payloadType": "str",
+        "x": 90,
+        "y": 220,
+        "wires": [
+            [
+                "b0e349008e38a47e"
+            ]
+        ]
+    },
+    {
+        "id": "490a1bb4b465593e",
+        "type": "function",
+        "z": "e53f196d320b50d7",
+        "name": "function 1",
+        "func": "msg.payload = {\n    chatId: \"8711577349\",\n    type: \"voice\",\n    content: msg.payload\n};\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 340,
+        "wires": [
+            [
+                "6be82c0176dd914e",
+                "11712cb1047e239b"
+            ]
+        ]
+    },
+    {
+        "id": "11712cb1047e239b",
+        "type": "telegram sender",
+        "z": "e53f196d320b50d7",
+        "name": "Resposta Telegran",
+        "bot": "37f9b03439a50de3",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 670,
+        "y": 340,
+        "wires": [
+            [
+                "0017519110df432b"
+            ]
+        ]
+    },
+    {
+        "id": "6be82c0176dd914e",
+        "type": "debug",
+        "z": "e53f196d320b50d7",
+        "name": "Resposta enviada",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 650,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "0017519110df432b",
+        "type": "debug",
+        "z": "e53f196d320b50d7",
+        "name": "Resposta recebida",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 710,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "37f9b03439a50de3",
+        "type": "telegram bot",
+        "botname": "VendasNezaoBot",
+        "usernames": "",
+        "chatids": "",
+        "baseapiurl": "",
+        "testenvironment": false,
+        "updatemode": "polling",
+        "pollinterval": 300,
+        "usesocks": false,
+        "sockshost": "",
+        "socksprotocol": "socks5",
+        "socksport": 6667,
+        "socksusername": "anonymous",
+        "sockspassword": "",
+        "bothost": "",
+        "botpath": "",
+        "localbothost": "0.0.0.0",
+        "localbotport": 8443,
+        "publicbotport": 8443,
+        "privatekey": "",
+        "certificate": "",
+        "useselfsignedcertificate": false,
+        "sslterminated": false,
+        "verboselogging": false
+    }
+]

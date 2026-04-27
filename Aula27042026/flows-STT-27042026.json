@@ -1,0 +1,161 @@
+[
+    {
+        "id": "acb5f81074f26764",
+        "type": "tab",
+        "label": "Flow 2",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "5ce55f9b9fc586a1",
+        "type": "telegram receiver",
+        "z": "acb5f81074f26764",
+        "name": "",
+        "bot": "37f9b03439a50de3",
+        "saveDataDir": "",
+        "filterCommands": false,
+        "x": 110,
+        "y": 200,
+        "wires": [
+            [
+                "b2b2a448fe994c0d",
+                "94dbfbeb2d22fa54"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "94dbfbeb2d22fa54",
+        "type": "function",
+        "z": "acb5f81074f26764",
+        "name": "Proc Entrada",
+        "func": "msg.payload = msg.payload.weblink\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 250,
+        "y": 340,
+        "wires": [
+            [
+                "49532099fccd4adc",
+                "c533a2ac75b871b6"
+            ]
+        ]
+    },
+    {
+        "id": "b2b2a448fe994c0d",
+        "type": "debug",
+        "z": "acb5f81074f26764",
+        "name": "Entrada Audio",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 260,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "c533a2ac75b871b6",
+        "type": "debug",
+        "z": "acb5f81074f26764",
+        "name": "Saida Texto",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 530,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "49532099fccd4adc",
+        "type": "watson-speech-to-text",
+        "z": "acb5f81074f26764",
+        "name": "Watson STT",
+        "alternatives": 1,
+        "speakerlabels": true,
+        "smartformatting": false,
+        "lang": "pt-BR",
+        "langhidden": "pt-BR",
+        "langcustom": "NoCustomisationSetting",
+        "langcustomhidden": "",
+        "custom-weight": "0.5",
+        "band": "BroadbandModel",
+        "bandhidden": "",
+        "keywords": "",
+        "keywords-threshold": "0.5",
+        "word-confidence": false,
+        "password": "",
+        "apikey": "DtnYGqGiSW-nqPaahznBChYjQKMN9MYBJy9iHjJIFElD",
+        "payload-response": true,
+        "streaming-mode": false,
+        "streaming-mute": true,
+        "auto-connect": false,
+        "discard-listening": false,
+        "disable-precheck": false,
+        "service-endpoint": "https://api.au-syd.speech-to-text.watson.cloud.ibm.com/instances/fe4f4d49-8e46-4325-843e-1ef4e47dd781",
+        "x": 510,
+        "y": 380,
+        "wires": [
+            [
+                "1d16e3c2a0dbc432"
+            ]
+        ]
+    },
+    {
+        "id": "1d16e3c2a0dbc432",
+        "type": "debug",
+        "z": "acb5f81074f26764",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 760,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "37f9b03439a50de3",
+        "type": "telegram bot",
+        "botname": "VendasNezaoBot",
+        "usernames": "",
+        "chatids": "",
+        "baseapiurl": "",
+        "testenvironment": false,
+        "updatemode": "polling",
+        "pollinterval": 300,
+        "usesocks": false,
+        "sockshost": "",
+        "socksprotocol": "socks5",
+        "socksport": 6667,
+        "socksusername": "anonymous",
+        "sockspassword": "",
+        "bothost": "",
+        "botpath": "",
+        "localbothost": "0.0.0.0",
+        "localbotport": 8443,
+        "publicbotport": 8443,
+        "privatekey": "",
+        "certificate": "",
+        "useselfsignedcertificate": false,
+        "sslterminated": false,
+        "verboselogging": false
+    }
+]

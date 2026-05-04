@@ -1,0 +1,262 @@
+[
+    {
+        "id": "58bd93b36a443f43",
+        "type": "tab",
+        "label": "Telegram + Watson Assistant + TTS",
+        "disabled": false,
+        "info": "Fluxo reconstruído a partir do material enviado."
+    },
+    {
+        "id": "d077c58c6b30a660",
+        "type": "telegram receiver",
+        "z": "58bd93b36a443f43",
+        "name": "Telegram receiver",
+        "bot": "2fb260d5851f4070",
+        "saveDataDir": "",
+        "filterCommands": false,
+        "x": 130,
+        "y": 180,
+        "wires": [
+            [
+                "4777e8b6ed2a7175",
+                "dc5a539423dc1c13"
+            ],
+            [
+                "34cb0210f55689df"
+            ]
+        ]
+    },
+    {
+        "id": "4777e8b6ed2a7175",
+        "type": "debug",
+        "z": "58bd93b36a443f43",
+        "name": "Entrada",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 390,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "dc5a539423dc1c13",
+        "type": "function",
+        "z": "58bd93b36a443f43",
+        "name": "ProcIN WA",
+        "func": "msg.params = {};\nmsg.params.session_id = msg.payload.chatId;\nmsg.payload = msg.payload.content;\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 160,
+        "wires": [
+            [
+                "4fca2095c3204776"
+            ]
+        ]
+    },
+    {
+        "id": "4fca2095c3204776",
+        "type": "watson-assistant-v2",
+        "z": "58bd93b36a443f43",
+        "name": "WA",
+        "service-endpoint": "",
+        "assistant_id": "",
+        "debug": false,
+        "restart": false,
+        "return_context": true,
+        "alternate_intents": false,
+        "multisession": false,
+        "timeout": "",
+        "optout-learning": false,
+        "persist-session-id": false,
+        "x": 550,
+        "y": 160,
+        "wires": [
+            [
+                "e50fd5abeae8f537",
+                "b439c92c7b0a35ee"
+            ]
+        ]
+    },
+    {
+        "id": "e50fd5abeae8f537",
+        "type": "debug",
+        "z": "58bd93b36a443f43",
+        "name": "Saída WA",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 830,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "b439c92c7b0a35ee",
+        "type": "function",
+        "z": "58bd93b36a443f43",
+        "name": "ProcOUT WA",
+        "func": "msg.payload = msg.payload.output.generic[0].text;\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 160,
+        "wires": [
+            [
+                "dce67b11732aac19",
+                "3a60fd93538ca964"
+            ]
+        ]
+    },
+    {
+        "id": "dce67b11732aac19",
+        "type": "debug",
+        "z": "58bd93b36a443f43",
+        "name": "Entrada TTS",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1040,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "3a60fd93538ca964",
+        "type": "watson-text-to-speech",
+        "z": "58bd93b36a443f43",
+        "name": "TTS",
+        "lang": "pt-br",
+        "langhidden": "",
+        "langcustomhidden": "",
+        "voice": "pt-BR_IsabelaV3Voice",
+        "voicehidden": "",
+        "format": "audio/wav",
+        "apikey": "",
+        "payload-response": false,
+        "service-endpoint": "",
+        "x": 990,
+        "y": 160,
+        "wires": [
+            [
+                "b29342e49ba178f2"
+            ]
+        ]
+    },
+    {
+        "id": "b29342e49ba178f2",
+        "type": "function",
+        "z": "58bd93b36a443f43",
+        "name": "ProcOUT TTS",
+        "func": "msg.payload = {\n    chatId : msg.params.session_id,\n    content : msg.payload,\n    type : 'voice'\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1220,
+        "y": 160,
+        "wires": [
+            [
+                "e1482ec6d4ca1934",
+                "f6b1d0d1361654bc"
+            ]
+        ]
+    },
+    {
+        "id": "e1482ec6d4ca1934",
+        "type": "debug",
+        "z": "58bd93b36a443f43",
+        "name": "Retorno TTS",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1440,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "34cb0210f55689df",
+        "type": "function",
+        "z": "58bd93b36a443f43",
+        "name": "Acesso não autorizado",
+        "func": "msg.payload.content = \"Usuário sem permissão de acesso.\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 340,
+        "wires": [
+            [
+                "f6b1d0d1361654bc"
+            ]
+        ]
+    },
+    {
+        "id": "f6b1d0d1361654bc",
+        "type": "telegram sender",
+        "z": "58bd93b36a443f43",
+        "name": "Telegram sender",
+        "bot": "2fb260d5851f4070",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 1410,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2fb260d5851f4070",
+        "type": "telegram bot",
+        "botname": "BOT_AJUSTAR",
+        "usernames": "",
+        "chatids": "",
+        "baseapiurl": "",
+        "updatemode": "polling",
+        "pollinterval": "300",
+        "usesocks": false,
+        "sockshost": "",
+        "socksprotocol": "socks5",
+        "socksport": "6667",
+        "socksusername": "",
+        "sockspassword": "",
+        "bothost": "",
+        "botpath": "",
+        "localbotport": "8443",
+        "publicbotport": "8443",
+        "privatekey": "",
+        "certificate": "",
+        "useselfsignedcertificate": false,
+        "sslterminated": false,
+        "verboselogging": false
+    }
+]

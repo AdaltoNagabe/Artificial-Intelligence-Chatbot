@@ -10,3 +10,23 @@ c:> set NODE_TLS_REJECT_UNAUTHORIZED=0
 https://core.telegram.org/api
 Documentacao
 
+8711577349
+
+-----------------------------------------------
+
+ProcOUT TTS
+msg.payload = {
+    chatId : msg.params,
+    content : msg.payload,
+    type : 'message'
+}
+return msg;
+
+ou 
+msg.payload = msg.payload.output.generic[0].text;
+return msg;
+
+--------------------------------------------------
+
+
+

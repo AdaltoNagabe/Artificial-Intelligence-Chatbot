@@ -29,4 +29,10 @@ return msg;
 --------------------------------------------------
 
 
+msg.params = {};
+msg.params.session_id = msg.payload.chatId;
+msg.payload = msg.payload.content;
+return msg;
+
+
 
